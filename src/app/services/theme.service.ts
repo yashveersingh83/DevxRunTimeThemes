@@ -65,7 +65,7 @@ export class ThemeService {
             let styleSheet = document.styleSheets[index],
                 href = styleSheet.href;
             if(href) {
-                debugger;
+                
                 let themeMarkerPosition = href.indexOf(themeMarker);
                 if(themeMarkerPosition >= 0) {
                     let startPosition = themeMarkerPosition + themeMarker.length,
