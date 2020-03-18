@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { EvaluationComponent } from './dashboard/evaluation/evaluation.component';
+import { StudentListComponent } from './Student/student-list/student-list.component';
 const routes: Routes = [
   {
       path: 'dashboard',
       data: { title: 'Dashboard' },
       component: EvaluationComponent
+
       // children: [
       //     {
       //         path: '',
@@ -17,11 +19,11 @@ const routes: Routes = [
   },
 
   
-  // {
-  //     path: 'products',
-  //     component: ProductsComponent,
-  //     data: { title: 'Products-y' }
-  // },
+  {
+      path: 'students',
+      component: StudentListComponent,
+      data: { title: 'Students' }
+  },
   // {
   //     path: 'sales',
   //     component: SalesComponent,

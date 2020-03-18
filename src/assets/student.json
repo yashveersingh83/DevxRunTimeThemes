@@ -1,0 +1,22 @@
+[
+    {
+        "Id":1,
+        "Name": "Yash",
+        "Email": "y.singh@iaea.org",
+        "Course1": "Calculus",
+        "Course1Grade": "3",
+        "Course2": "Math",
+        "Course2Grade": "2"
+        
+    },
+
+    {
+        "Id":2,
+        "Name": "Ruchi ",
+        "Email": "r.singh@iaea.org",
+        "Course1": "Commerce",
+        "Course1Grade": "3",
+        "Course2": "Stats",
+        "Course2Grade": "2"
+    }
+]
