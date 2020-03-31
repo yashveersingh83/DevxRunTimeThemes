@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 
-import { DxMenuModule, DxSelectBoxModule, DxCheckBoxModule, DxBulletModule, DxTemplateModule, DxDataGridModule, DxPopupModule, DxFormModule, DxButtonModule, DxTextAreaModule } from 'devextreme-angular';
+import { DxMenuModule, DxSelectBoxModule, DxCheckBoxModule, DxBulletModule, DxTemplateModule, DxDataGridModule, DxPopupModule, DxFormModule, DxButtonModule, DxTextAreaModule, DxDropDownBoxModule } from 'devextreme-angular';
 import { DxResponsiveBoxModule } from "devextreme-angular";
 
 
@@ -13,6 +13,7 @@ import { StudentRegisterComponent } from './student-register/student-register.co
 import { EnrollStudentComponent } from './enroll-student/enroll-student.component';
 import { DisEnrollStudentComponent } from './dis-enroll-student/dis-enroll-student.component';
 import { StudentService } from './student.service';
+import { CourseService } from './course.service';
 
 @NgModule({
   declarations: [
@@ -29,8 +30,9 @@ import { StudentService } from './student.service';
     DxDataGridModule,
     DxTemplateModule,
     DxBulletModule,
-    DxTextAreaModule
+    DxTextAreaModule,
+    DxDropDownBoxModule
   ],
-  providers:[StudentService]
+  providers:[StudentService,CourseService]
 })
 export class StudentModule { }

@@ -1,1 +1,16 @@
-<p>dis-enroll-student works!</p>
+<!-- <dx-popup [width]="700" [height]="500" [showTitle]="true" title="DisEnroll" 
+    [dragEnabled]="false"
+    [closeOnOutsideClick]="true" [(visible)]="disEnrollPopupVisible"> -->
+    <dx-form id="form" [formData]="selectedStudent" method="post">
+
+    <dxi-item  [colSpan]="2" editorType="dxTextArea" caption="Comments"   [editorOptions]="{ height: 100 }"></dxi-item>
+    <dxi-item itemType="group" [colCount]="6">       
+        <dx-button text="DisEnroll" type="success" (click)="DisEnroll(selectedStudent)" [useSubmitBehavior]="true">
+        </dx-button>
+        <dx-button text="Cancel" type="button" (click)="closedisEnrollPopupVisible()">
+        </dx-button>
+    </dxi-item>
+</dx-form>
+<!-- </dx-popup>
+ -->
+<!--  End DisEnrollMent PopUp   -->

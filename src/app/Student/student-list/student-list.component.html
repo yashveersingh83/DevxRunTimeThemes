@@ -10,62 +10,60 @@
     ></dxo-search-panel> -->
     <dxo-group-panel [visible]="true"></dxo-group-panel>
     <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
-    <!-- <dxo-editing 
-            mode="popup"
-            [allowUpdating]="true"
-            [allowDeleting]="true"
-         [allowAdding]="true"
-            [allowUpdating]="true">
-            <dxo-popup
-                title="Edit Student Info"
-                [showTitle]="true"
-                [width]="700"
-                [height]="525"
-                [position]="{ my: 'top', at: 'top', of: window }"
-                [toolbarItems]="[  
-                {  
-                widget: 'dxButton',  
-                location: 'before',  
-                options: {  
-                  text: 'Update Personal Information',  
-                  icon: 'save'  
-                },  
-                toolbar: 'bottom',  
-                onClick: UpdateInforamtion  
-            }]"  
-                >
-            </dxo-popup>
-            <dxo-form>
-                <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
-                    <dxi-item dataField="Name"></dxi-item>                   
-                    <dxi-item dataField="Email"></dxi-item>                                      
-                </dxi-item>                
-            </dxo-form>
-        </dxo-editing> -->
+   
 
-    <dxi-column dataField="Name"></dxi-column>
-    <dxi-column dataField="Email" caption="Email"></dxi-column>
-    <dxi-column caption="Course1" dataField="Course1" cellTemplate="enroll-Transfer-Disenrol-Course"></dxi-column>
-    <dxi-column dataField="Course1Grade"></dxi-column>
-    <dxi-column dataField="Course2"></dxi-column>
-    <dxi-column dataField="Course2Grade"></dxi-column>
+    <dxi-column dataField="firstName"></dxi-column>
+    <dxi-column dataField="lastName"></dxi-column>
+    <dxi-column dataField="email" caption="Email"></dxi-column>
+    <dxi-column  dataField="course1"  cellTemplate="enroll-Transfer-Disenrol-Course1"></dxi-column>
+    <dxi-column dataField="course1Grade"></dxi-column>
+    <dxi-column dataField="course2"  cellTemplate="enroll-Transfer-Disenrol-Course2" ></dxi-column>
+    <dxi-column dataField="course2Grade"></dxi-column>
 
-    <div *dxTemplate="let d of 'enroll-Transfer-Disenrol-Course'">
-        <div class="current-value" id="transferCourse"> {{d.data.Course1}}
-            <span> <a (click)="transferCourse($event ,d)"> Transfer </a></span>
+    <dxi-column  cellTemplate="editInfo"  >  
+          
+    </dxi-column>
+
+    <div *dxTemplate="let d of 'editInfo'">    
+        <div class="button" id="editInfo"><span> <a (click)="editInfo(d)"> Edit </a></span></div>
+    </div>
+
+    <div *dxTemplate="let d of 'enroll-Transfer-Disenrol-Course1'">
+        <div *ngIf="d.data?.course1"  class="current-value" id="transferCourse"> {{d.data?.course1}}
+            <span> <a (click)="transferCourse(d.data?.id, d.data?.course1ID)"> Transfer </a></span>
         </div>
-        <div class="button" id="Disenroll"><span> <a (click)="DisEnrollPopup(selectedStudent)"> DisEnroll </a></span></div>
+        <div *ngIf="d.data?.course2"  class="button" id="Disenroll"><span> <a (click)="DisEnrollPopup(d.data?.course1ID)"> DisEnroll </a></span></div>
+    </div>
+
+
+
+    <div *dxTemplate="let d of 'enroll-Transfer-Disenrol-Course2'">
+        <div class="current-value" id="transferCourse"> {{d.data?.course2}}
+            <span *ngIf="d.data?.course2" > <a (click)="transferCourse(d.data?.id, d.data?.course2ID )"> Transfer </a></span>
+        </div>
+        <div class="button" id="Disenroll"><span *ngIf="d.data?.course2" > <a (click)="DisEnrollPopup(d.data?.course2ID)"> DisEnroll </a></span></div>
     </div>
 </dx-data-grid>
 
 <!--  DisEnrollMent PopUp   -->
 <dx-popup [width]="700" [height]="500" [showTitle]="true" title="DisEnroll" 
+[dragEnabled]="false"
+[closeOnOutsideClick]="true" [(visible)]="disEnrollPopupVisible">
+
+<app-dis-enroll-student [selectedStudent]="selectedStudent" 
+[selectedCourseId]="selectedCourseId"   >
+
+</app-dis-enroll-student>
+
+</dx-popup>
+
+
+<!-- <dx-popup [width]="700" [height]="500" [showTitle]="true" title="DisEnroll" 
     [dragEnabled]="false"
     [closeOnOutsideClick]="true" [(visible)]="disEnrollPopupVisible">
     <dx-form id="form" [formData]="selectedStudent" method="post">
 
-    <dxi-item  [colSpan]="2" editorType="dxTextArea" 
-    [editorOptions]="{ height: 100 }"></dxi-item>
+    <dxi-item  [colSpan]="2" editorType="dxTextArea" caption="Comments"   [editorOptions]="{ height: 100 }"></dxi-item>
     <dxi-item itemType="group" [colCount]="6">       
         <dx-button text="DisEnroll" type="success" (click)="DisEnroll(selectedStudent)" [useSubmitBehavior]="true">
         </dx-button>
@@ -75,43 +73,64 @@
 </dx-form>
 </dx-popup>
 
-<!--  End DisEnrollMent PopUp   -->
+<!--  End DisEnrollMent PopUp   --> -->
 
 <!--  Edit Personnel Info PopUp   -->
 <dx-popup [width]="700" [height]="500" [showTitle]="true" title="Information" [dragEnabled]="false"
     [closeOnOutsideClick]="true" [(visible)]="editInfopopupVisible">
+    <div *dxTemplate="let data of 'content'">        
+        <dx-form id="form"
+            [colCount]="2"
+            [formData]="selectedStudent">
+            
+            <dxi-item dataField="firstName" [editorOptions]="{ disabled: true }"></dxi-item>
+            <dxi-item dataField="lastName"  [editorOptions]= "editorOption"></dxi-item>
 
-    <dx-form id="form" [formData]="selectedStudent" method="post">
-        <dxi-item itemType="group" cssClass="first-group" [colCount]="4">
-            <dxi-item>
-                <div class="form-avatar"></div>
-            </dxi-item>
-            <dxi-item itemType="group" [colSpan]="3">
-                <dxi-item dataField="Name"></dxi-item>
-                <dxi-item dataField="Email"></dxi-item>
-            </dxi-item>
-        </dxi-item>
-
-        <dxi-item itemType="group" [colCount]="4">
-            <dx-button text="Submit" type="success" (click)="editInfo(selectedStudent)" [useSubmitBehavior]="true">
-            </dx-button>
-            <dx-button text="Cancel" type="button" (click)="closeEditPopup()">
-            </dx-button>
-        </dxi-item>
-
-        <!-- <dxi-item itemType="group" cssClass="second-group" [colCount]="2">
-		<dxi-item itemType="group">
-			<dxi-item dataField="Address"></dxi-item>
-			<dxi-item dataField="City"></dxi-item>
-			<dxi-item dataField="Position" editorType="dxSelectBox" [editorOptions]="{ items: positions, value: '' }"></dxi-item>
-		</dxi-item>
-		<dxi-item itemType="group">
-			<dxi-item dataField="State" editorType="dxSelectBox" [editorOptions]="{ items: states }"></dxi-item>
-			<dxi-item dataField="ZipCode"></dxi-item>
-			<dxi-item dataField="Mobile" [label]="{text: 'Phone'}" [editorOptions]="{ mask: '+1 (000) 000-0000'}"></dxi-item>
-		</dxi-item>
-		<dxi-item dataField="Notes" [colSpan]="2" editorType="dxTextArea" [editorOptions]="{ height: 140 }"></dxi-item>
-    </dxi-item> -->
-    </dx-form>
+            
+       </dx-form>
+       <dx-button (onClick)="UpdateInforamtion( selectedStudent)" text="UpdateInforamtion"></dx-button>
+    </div>
+    
 </dx-popup>
 <!--  End of Edit Popup    -->
+
+
+<!--  Transfer course  PopUp   -->
+<dx-popup [width]="700" [height]="500" [showTitle]="true" title="Change your course" [dragEnabled]="false"
+    [closeOnOutsideClick]="true" [(visible)]="transferPopupVisible">
+    <div *dxTemplate="let data of 'content'">        
+        <div class="dx-field">
+            <div class="dx-field-label">Current course</div>
+            <div class="dx-field-value">
+                <dxi-item  >{{CurrentCourseTitle}}</dxi-item>
+                    </div>               
+            </div>
+            <div class="dx-fieldset">
+                <div class="dx-fieldset-header">New course </div>
+                <div class="dx-field">
+                    <div class="dx-field-label">Product</div>
+                    <div class="dx-field-value">
+                        <dx-select-box #selectBox
+                            [dataSource]="courseList$"
+                            [acceptCustomValue]="true"
+                            displayExpr="title"                            
+                            (onCustomItemCreating)="addCustomItem($event)"></dx-select-box>
+                    </div>
+                </div>
+                <div class="dx-field current-product">
+                    Current product:
+                    <span *ngIf="selectBox.value; else emptyValue" class="current-value">
+                        {{selectBox.value.title}} (ID: {{selectBox.value.courseID}})
+                    </span>
+                    <ng-template #emptyValue>
+                        <span class="current-value">Not selected</span>
+                    </ng-template>
+                </div>
+            </div>
+
+       <dx-button (onClick)="transfer(selectedStudent,selectBox.value.courseID)" text="Transfer Course"></dx-button>
+    </div>
+    
+</dx-popup>
+<!--  End of Transfer course    -->
+
